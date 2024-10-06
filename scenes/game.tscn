@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpmjoyt5h6uoq"]
+
+[ext_resource type="PackedScene" uid="uid://bjspjlf5257ap" path="res://scenes/bird.tscn" id="1_csjng"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nw600"]
+size = Vector2(177, 671)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_girkx"]
+size = Vector2(276, 309)
+
+[node name="Game" type="Node2D"]
+
+[node name="bird" parent="." instance=ExtResource("1_csjng")]
+position = Vector2(-467, 45)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(40, 24)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-165.5, 7.5)
+shape = SubResource("RectangleShape2D_nw600")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-396, 221)
+shape = SubResource("RectangleShape2D_girkx")

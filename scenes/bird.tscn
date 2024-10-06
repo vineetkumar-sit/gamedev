@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjspjlf5257ap"]
+
+[ext_resource type="Texture2D" uid="uid://bo7g686ry76xn" path="res://assets/bluebird-spite.png" id="1_ym6mb"]
+
+[sub_resource type="GDScript" id="GDScript_6bnde"]
+script/source = "extends CharacterBody2D
+
+# Constants for movement
+const FORWARD_SPEED = 200.0
+const JUMP_VELOCITY = -400.0
+const GRAVITY = 800.0
+
+func _physics_process(delta: float) -> void:
+	# Apply gravity if not on the floor.
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+
+	# Handle jump when the player presses the jump button.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	
+	# Set constant forward velocity.
+	velocity.x = FORWARD_SPEED
+
+	# Move the character.
+	move_and_slide()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bimcy"]
+atlas = ExtResource("1_ym6mb")
+region = Rect2(0, 0, 34, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_745uv"]
+atlas = ExtResource("1_ym6mb")
+region = Rect2(0, 24, 34, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87r6e"]
+atlas = ExtResource("1_ym6mb")
+region = Rect2(0, 48, 34, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yu07s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bimcy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_745uv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87r6e")
+}],
+"loop": true,
+"name": &"flap",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2t02g"]
+radius = 8.0
+height = 16.0
+
+[node name="bird" type="CharacterBody2D"]
+script = SubResource("GDScript_6bnde")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_yu07s")
+animation = &"flap"
+autoplay = "flap"
+frame = 2
+frame_progress = 0.205163
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12)
+shape = SubResource("CapsuleShape2D_2t02g")
